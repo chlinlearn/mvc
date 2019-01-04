@@ -16,17 +16,19 @@ import java.util.Map;
 
 public abstract class BussinessController {
     public abstract SuperService getService();
+
     public abstract Employee getModel();
 
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public Object save(@RequestBody String jsonStr){
-        System.out.println("jsonStr:"+jsonStr);
+    public Object save(@RequestBody String jsonStr) {
+        System.out.println("jsonStr:" + jsonStr);
 //        字符串转换对象
-        Object obj = JSON.parseObject(jsonStr,getModel().getClass());
+        Object obj = JSON.parseObject(jsonStr, getModel().getClass());
         getService().save(obj);
         return obj;
     }
+
     @RequestMapping(value = "findByCondition", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject findByAll(@RequestBody String jsonStr) {
@@ -50,8 +52,9 @@ public abstract class BussinessController {
             String str = "{'message':'删除失败','code':'0'}";
             return JSONObject.parseObject(str);
         } else {
-            Map<String ,Object> map=JSONObject.parseObject(jsonStr);
+            Map<String, Object> map = JSONObject.parseObject(jsonStr);
             int id = Integer.parseInt(map.get("id").toString());
+            System.out.println(id);
             getService().delete(id);
             String str = "{'message':'删除成功','code':'1'}";
             System.out.println(str);
@@ -59,11 +62,12 @@ public abstract class BussinessController {
         }
     }
 
-    @RequestMapping(value = "update",method = RequestMethod.POST)
+    @RequestMapping(value = "update", method = RequestMethod.POST)
     public JSONObject update(@RequestBody String jsonStr) {
         Object obj = JSONObject.parseObject(jsonStr,getModel().getClass());
         getService().update(obj);
         String str = "{'message':'修改成功','code':'1'}";
+        System.out.println(str);
         return JSONObject.parseObject(str);
     }
 }

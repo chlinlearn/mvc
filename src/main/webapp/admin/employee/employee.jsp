@@ -38,7 +38,7 @@
                     <tr>
                         <td>性别:</td>
                         <td>
-                            <select class="easyui-combobox" name="gender" id="e_gender" type="text" style="width: 60px"><option value="0">男</option><option value="1">女</option></select>
+                            <select class="easyui-combobox" name="gender" id="e_gender" type="text" style="width: 60px"><option value="男">男</option><option value="女">女</option></select>
                         </td>
                     </tr>
                     <tr>

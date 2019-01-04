@@ -29,9 +29,17 @@
         DELETE FROM employee WHERE id = #{id}
     </delete>
 
-    <!--<update id="update" parameterType="ecjtu.entity.Employee">-->
-        <!--update employee-->
-        <!--set name=#{name},gender=#{gender},age=#{age,jdbcType=INTERGER},-->
-        <!--birthday=#{birthday},address=#{address},department=#{department} where id=#{id}-->
-    <!--</update>-->
+    <update id="update" parameterType="ecjtu.entity.Employee">
+        UPDATE employee
+        <!--<set>-->
+            <!--<if test="name != null">name=#{name},</if>-->
+            <!--<if test="gender != null">gender=#{gender,jdbcType=VARCHAR},</if>-->
+            <!--<if test="age != null">age=#{age,jdbcType=INTERGER},</if>-->
+            <!--<if test="birthday != null">birthday=#{birthday,jdbcType=VARCHAR},</if>-->
+            <!--<if test="address != null">address=#{address,jdbcType=VARCHAR},</if>-->
+            <!--<if test="department != department">department=#{department,jdbcType=VARCHAR}</if>-->
+            set name=#{name},gender=#{gender},age=#{age},birthday=#{birthday},address=#{address},department=#{department} where id=#{id}
+        <!--</set>-->
+    </update>
+
  </mapper>

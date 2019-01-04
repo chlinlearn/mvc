@@ -48,10 +48,11 @@
     <script>
         format=function(val,row,index) {
             var btn = '<a href="#" id="bj'+index+'" class="easyui-linkbutton easyui-tooltip" title="编辑" data-options="plain:true" onclick="update(\''+index+'\')"><span class="l-btn-text">编辑</span></a> '
-                + '<a href="#"  id="bc'+index+'" class="easyui-linkbutton easyui-tooltip" style="display:none" onclick="save(\''+index+'\',\''+row.EMP_ID+'\',\''+row.JOB_NUMBER+'\',\''+row.NAME+'\')">保存</a>'
+                + '<a href="#"  id="bc'+index+'" class="easyui-linkbutton easyui-tooltip" style="display:none" onclick="save(\''+index+'\')">保存</a>'
                 + '<a href="#"  id="qx'+index+'" class="easyui-linkbutton easyui-tooltip" style="display:none" onclick="cancel(\''+index+'\')">取消</a>';
             return btn+ '<a href="#" class="easyui-linkbutton easyui-tooltip" title="删除" data-options="plain:true" onclick="del('+index+')"><span class="l-btn-text">删除</span></a>';
         }
+
         function find(obj){
             $.ajax({
                 url:"findByCondition",
@@ -83,18 +84,25 @@
         }
         function update(index) {
             var row = $("#dg").datagrid("getSelected");//取得选中行数据
-            if (row){
-                alert('id:'+row.id+',name:'+row.name+',gender:'+row.gender+',age:'
-                    +row.age+',birthday:'+row.birthday
-                    +',address:'+row.address+',department:'+row.department);
-            }
+            // if (row){
+            //     alert('id:'+row.id+',name:'+row.name+',gender:'+row.gender+',age:'
+            //         +row.age+',birthday:'+row.birthday
+            //         +',address:'+row.address+',department:'+row.department);
+            // }
             $('#bj' + index).hide();
             $('#bc' + index).show();
             $('#qx' + index).show();
-
             $('#dg').datagrid('beginEdit',index);//启动行编辑器
+            var ed = $('#dg').datagrid('getEditor', { index: index, filed: 'name' });
+            ed.target.val('newName');
+        }
 
-
+        function save(index){
+            $('#dg').datagrid('endEdit',index);//结束行编辑器
+            $('#dg').datagrid('getChanges');
+            $("#dg").datagrid('selectRow',index)
+            var row = $("#dg").datagrid("getSelected");//取得选中行数据
+            //alert(row.name+','+row.id);
             $.ajax({
                 url:"update",
                 dataType:'json',
@@ -104,10 +112,12 @@
                 success:function (data) {
                     var obj = {name:""};
                     find(obj);
-                    alert("update success")
+                    alert("update success");
+                    window.location.href="<%=basePath%>/employee/manage";
                 }
             })
         }
+
         //取消
         function cancel(index){
             $('#dg').datagrid('cancelEdit',index);

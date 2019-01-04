@@ -34,6 +34,4 @@ public class EmployeeControllerImpl extends BussinessController implements Emplo
     public String addEmployee(){
         return "employee/employee";
     }
-
-
 }
